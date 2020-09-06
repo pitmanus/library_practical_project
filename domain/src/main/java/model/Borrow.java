@@ -19,11 +19,33 @@ public class Borrow implements Serializable {
     private LocalDate dateOfBorrow;
 
     @ManyToOne
-    @JoinTable(name = "id_book")
+    @JoinColumn(name = "id_book")
     private Book book;
 
     @ManyToOne
-    @JoinTable(name = "id_borrower")
+    @JoinColumn(name = "borrower_id")
     private Borrower borrower;
 
+    public Borrow (long id_borrow, LocalDate dateOfBorrow) {
+        this.id_borrow = id_borrow;
+        this.dateOfBorrow = dateOfBorrow;
+
+    }
+
+    public Borrow (LocalDate dateOfBorrow) {
+        this.dateOfBorrow = dateOfBorrow;
+    }
+
+    public Borrow () {
+    }
+
+    @Override
+    public String toString () {
+        return "Borrow{" +
+                "id_borrow=" + id_borrow +
+                ", dateOfBorrow=" + dateOfBorrow +
+                ", book=" + book +
+                ", borrower=" + borrower +
+                '}';
+    }
 }

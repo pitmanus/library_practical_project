@@ -21,10 +21,36 @@ public class Borrower implements Serializable {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
+
+
     @OneToMany(mappedBy = "borrower")
     private List<Borrow> borrows = new ArrayList<> ();
 
-    @OneToOne(mappedBy = "borrower")
+    @OneToOne
+    @JoinColumn(name = "borrower_details_id")
     private BorrowerDetails borrowerDetails;
 
+    public Borrower (long id_borrower, String firstName, String lastName) {
+        this.id_borrower = id_borrower;
+        this.firstName = firstName;
+        this.lastName = lastName;
+
+    }
+
+    public Borrower (String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public Borrower () {
+    }
+
+    @Override
+    public String toString () {
+        return "Borrower{" +
+                "id_borrower=" + id_borrower +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                '}';
+    }
 }

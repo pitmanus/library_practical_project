@@ -22,8 +22,31 @@ public class BorrowerDetails implements Serializable {
     @Column(nullable = false)
     private String email;
 
-    @OneToOne
-    @JoinColumn(name = "borrower_id")
-    private Borrower borrower;
+    public BorrowerDetails (long id_borrower_details, String address, String tel, String email) {
+        this.id_borrower_details = id_borrower_details;
+        this.address = address;
+        this.tel = tel;
+        this.email = email;
 
+    }
+
+    public BorrowerDetails (String address, String tel, String email) {
+        this.address = address;
+        this.tel = tel;
+        this.email = email;
+
+    }
+
+    public BorrowerDetails () {
+    }
+
+    @Override
+    public String toString () {
+        return "BorrowerDetails{" +
+                "id_borrower_details=" + id_borrower_details +
+                ", address='" + address + '\'' +
+                ", tel='" + tel + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }

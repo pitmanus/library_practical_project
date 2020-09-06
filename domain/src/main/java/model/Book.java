@@ -31,10 +31,55 @@ public class Book implements Serializable {
     @Column(name = "short_description", nullable = false)
     private String shortDescription;
 
+
+    private boolean isRemoved = false;
+    private boolean isBorrowed = false;
+
     @ManyToOne
     @JoinColumn(name = "id_author")
     private Author author;
 
-    @OneToMany(mappedBy = "book")
+     @OneToMany(mappedBy = "book")
     private List<Borrow> borrows = new ArrayList<> ();
+
+
+    public Book (String title, LocalDate publicationDate, String isbn, GenresOfBooks genresOfBooks, int numberOfPages, String shortDescription, Boolean isBorrowed, Boolean isRemoved) {
+        this.title = title;
+        this.publicationDate = publicationDate;
+        this.isbn = isbn;
+        this.genresOfBooks = genresOfBooks;
+        this.numberOfPages = numberOfPages;
+        this.shortDescription = shortDescription;
+
+    }
+
+    public Book (long book_id, String title, LocalDate publicationDate, String isbn, GenresOfBooks genresOfBooks, int numberOfPages, String shortDescription,  Boolean isBorrowed, Boolean isRemoved) {
+        this.book_id = book_id;
+        this.title = title;
+        this.publicationDate = publicationDate;
+        this.isbn = isbn;
+        this.genresOfBooks = genresOfBooks;
+        this.numberOfPages = numberOfPages;
+        this.shortDescription = shortDescription;
+
+    }
+
+    public Book () {
+    }
+
+    @Override
+    public String toString () {
+        return "Book{" +
+                "book_id=" + book_id +
+                ", title='" + title + '\'' +
+                ", publicationDate=" + publicationDate +
+                ", isbn='" + isbn + '\'' +
+                ", genresOfBooks=" + genresOfBooks +
+                ", numberOfPages=" + numberOfPages +
+                ", shortDescription='" + shortDescription + '\'' +
+                ", isRemoved=" + isRemoved +
+                ", isBorrowed=" + isBorrowed +
+                ", author=" + author +
+                '}';
+    }
 }
