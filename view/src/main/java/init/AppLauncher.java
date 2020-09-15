@@ -2,10 +2,12 @@ package init;
 
 import javax.persistence.*;
 
+import java.io.*;
 import java.time.*;
 import java.util.*;
 
 import controllers.*;
+import export.*;
 import model.*;
 import repositories.*;
 import service.*;
@@ -18,16 +20,30 @@ public class AppLauncher {
         Scanner scanner = new Scanner (System.in);
 
         BookController bookController = new BookController (entityManager);
+        BookService bookService = new BookService (entityManager);
         AuthorController authorController = new AuthorController (entityManager);
         BorrowController borrowController = new BorrowController (entityManager);
         BorrowerController borrowerController = new BorrowerController (entityManager);
+        ImportExportController importExportController = new ImportExportController (entityManager);
+        BookExporter bookExporter = new BookExporter ();
+        BookParser bookParser = new BookParser ();
 
         int option;
-        boolean start;
-        System.out.println ("Do you want to switch on the library? ");
-        start = scanner.nextBoolean ();
-        do {
-            System.out.println ("Library");
+        boolean start = false;
+        String startLine;
+
+        System.out.println ("Do you want to switch on the library? Yes or No ");
+        startLine = scanner.nextLine ();
+        startLine = startLine.toUpperCase ();
+        if ("YES".equals (startLine)) {
+            start = true;
+        } else {
+            start = false;
+        }
+
+
+        while (start) {
+            System.out.println ("L I B R A R Y");
             System.out.println (" Following operations are available to perform:");
             System.out.println ("1. Add book");
             System.out.println ("2. Remove");
@@ -37,6 +53,9 @@ public class AppLauncher {
             System.out.println ("6. Borrow book");
             System.out.println ("7. Return book");
             System.out.println ("8. Add user");
+            System.out.println ("9. Export books into .xlsx file");
+            System.out.println ("10. Import books from .xlsx file");
+            System.out.println ("11. Exit from the library");
             option = scanner.nextInt ();
             scanner.nextLine ();
 
@@ -75,49 +94,29 @@ public class AppLauncher {
                     borrowerController.addUser (scanner);
                     break;
 
+                case (9):
+                    try {
+                        bookExporter.export (bookController.getBooksList ());
+                    } catch (XlsxParseException e) {
+                        e.printStackTrace ();
+                    }
+                    break;
+
+                case (10):
+                    //"/Users/pitmanus/Downloads/books_sample.xlsx"
+                   importExportController.parseBook (scanner, authorController);
+                    break;
+
+                case (11):
+                    start = false;
+                    break;
+
                 default:
                     System.out.println ("Invalid option");
                     break;
             }
-        } while (start = true);
-
-
-
-
-
-
-
-
-
-
-
-       /* EntityManager prodPersistenceUnit = Persistence.createEntityManagerFactory ("libraryPersistenceUnit").createEntityManager ();
-        AuthorRepository authorRepository = new AuthorRepository (prodPersistenceUnit);
-        BookRepository bookRepository = new BookRepository (prodPersistenceUnit);
-        BorrowRepository borrowRepository = new BorrowRepository (prodPersistenceUnit);
-        BorrowerRepository borrowerRepository = new BorrowerRepository (prodPersistenceUnit);
-        BorrowerDetailsRepository borrowerDetailsRepository = new BorrowerDetailsRepository (prodPersistenceUnit);
-
-        Author author1 = new Author ("Gregory", "Roberts", "New Zeland");
-
-        Book book1 = new Book ("Shantaram", LocalDate.parse ("2010-01-12"), "798823765636865", GenresOfBooks.NOVEL, 566, "Short description");
-        authorRepository.create (author1);
-        bookRepository.create (book1);
-
-        book1.setAuthor (author1);
-
-        BorrowerDetails borrowerDetails1 = new BorrowerDetails ("Krakow, ul. Sienna 26/1, 31-000", "987-765-345", "bor777@gmail.com");
-        borrowerDetailsRepository.create (borrowerDetails1);
-
-        Borrower borrower1 = new Borrower ("John", "Rico");
-        borrower1.setBorrowerDetails (borrowerDetails1);
-        borrowerRepository.create (borrower1);
-
-        Borrow borrow1 = new Borrow (LocalDate.parse ("2020-08-29"));
-        borrow1.setBook (book1);
-        borrow1.setBorrower (borrower1);
-        borrowRepository.create (borrow1);*/
-
+        }
+        System.out.println ("Library was turned off");
 
     }
 }

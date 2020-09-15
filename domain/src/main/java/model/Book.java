@@ -27,7 +27,7 @@ public class Book implements Serializable {
     @Column(name = "book_genres")
     private GenresOfBooks genresOfBooks;
     @Column(name = "number_of_pages", nullable = false)
-    private int numberOfPages;
+    private Integer numberOfPages;
     @Column(name = "short_description", nullable = false)
     private String shortDescription;
 
@@ -43,7 +43,8 @@ public class Book implements Serializable {
     private List<Borrow> borrows = new ArrayList<> ();
 
 
-    public Book (String title, LocalDate publicationDate, String isbn, GenresOfBooks genresOfBooks, int numberOfPages, String shortDescription, Boolean isBorrowed, Boolean isRemoved) {
+    public Book (long book_id, String title, LocalDate publicationDate, String isbn, GenresOfBooks genresOfBooks, Integer numberOfPages, String shortDescription,  Boolean isBorrowed, Boolean isRemoved) {
+        this.book_id = book_id;
         this.title = title;
         this.publicationDate = publicationDate;
         this.isbn = isbn;
@@ -53,8 +54,7 @@ public class Book implements Serializable {
 
     }
 
-    public Book (long book_id, String title, LocalDate publicationDate, String isbn, GenresOfBooks genresOfBooks, int numberOfPages, String shortDescription,  Boolean isBorrowed, Boolean isRemoved) {
-        this.book_id = book_id;
+    public Book (String title, LocalDate publicationDate, String isbn, GenresOfBooks genresOfBooks, Integer numberOfPages, String shortDescription, Boolean isBorrowed, Boolean isRemoved) {
         this.title = title;
         this.publicationDate = publicationDate;
         this.isbn = isbn;

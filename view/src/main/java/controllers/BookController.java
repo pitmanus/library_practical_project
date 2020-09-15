@@ -10,8 +10,8 @@ import service.*;
 
 public class BookController {
 
-    AuthorService authorService;
-    BookService bookService;
+    private AuthorService authorService;
+    private BookService bookService;
 
 
     public BookController (EntityManager entityManager) {
@@ -38,16 +38,17 @@ public class BookController {
             author = new Author (first_name, last_name, placeOfBirth);
             authorService.addAuthor (author);
         } else {
-            System.out.println ("Choose the author from the list");
+            System.out.println ("Choose authors ID from the list");
             int author_id = scanner.nextInt ();
             for (Author a : authorList) {
                 if (author_id == a.getAuthor_id ()) {
                     author = a;
+                    System.out.println ("Author with ID " + author.getAuthor_id () + " was selected");
                 }
             }
-            authorService.addAuthor (author);
         }
 
+        scanner.nextLine ();
         System.out.println ("Add the book");
         System.out.println ("Enter title of the book");
         String title = scanner.nextLine ();
@@ -59,7 +60,7 @@ public class BookController {
         String genresOfBooks = scanner.nextLine ();
         genresOfBooks = genresOfBooks.toUpperCase ();
         System.out.println ("Enter a number of pages");
-        int numberOfPages = scanner.nextInt ();
+        Integer numberOfPages = scanner.nextInt ();
         System.out.println ("Enter short description of the book");
         scanner.nextLine ();
         String shortDescription = scanner.nextLine ();
@@ -94,7 +95,7 @@ public class BookController {
         String genresOfBooks1 = scanner.nextLine ();
         genresOfBooks1 = genresOfBooks1.toUpperCase ();
         System.out.println ("Enter a number of pages");
-        int numberOfPages1 = scanner.nextInt ();
+        Integer numberOfPages1 = scanner.nextInt ();
         System.out.println ("Enter short description of the book");
         String shortDescription1 = scanner.nextLine ();
 
@@ -108,6 +109,10 @@ public class BookController {
     public void showAllBooks () {
         System.out.println ("List of all available books: ");
         bookService.getBookRepository ().findAll ().forEach (book3 -> System.out.println (book3));
+    }
+
+    public List<Book> getBooksList(){
+        return bookService.getBookRepository ().findAll ();
     }
 
 

@@ -10,11 +10,11 @@ import service.*;
 
 public class BorrowController {
 
-    AuthorService authorService;
-    BookService bookService;
-    BorrowerService borrowerService;
-    BorrowService borrowService;
-    BookController bookController;
+    private AuthorService authorService;
+    private BookService bookService;
+    private BorrowerService borrowerService;
+    private BorrowService borrowService;
+    private BookController bookController;
 
     public BorrowController (EntityManager entityManager) {
         this.authorService = new AuthorService (entityManager);

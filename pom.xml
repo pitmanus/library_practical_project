@@ -13,6 +13,7 @@
         <module>persistence</module>
         <module>service</module>
         <module>view</module>
+        <module>import-export</module>
     </modules>
 
     <dependencies>

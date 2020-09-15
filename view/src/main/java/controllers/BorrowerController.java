@@ -8,8 +8,8 @@ import repositories.*;
 import service.*;
 
 public class BorrowerController {
-    BorrowerService borrowerService;
-    BorrowerDetailsService borrowerDetailsService;
+    private BorrowerService borrowerService;
+    private BorrowerDetailsService borrowerDetailsService;
 
     public BorrowerController (EntityManager entityManager) {
         this.borrowerService = new BorrowerService (entityManager);
